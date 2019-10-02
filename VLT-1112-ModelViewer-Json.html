@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>3D Objects in Web XR</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- 💁 Include both scripts below to support all browsers! -->
+
+<!-- Loads <model-viewer> for modern browsers: -->
+<script type="module"
+    src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js">
+</script>
+
+<!-- Loads <model-viewer> for old browsers like IE11: -->
+<script nomodule
+    src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js">
+</script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<style>
+
+.content3D {
+  margin: 3em auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+model-viewer {
+  width: 100%;
+  height: 400px;
+}
+
+.attribution {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1em;
+}
+
+.attribution h1 {
+  margin: 0 0 0.25em;
+}
+
+.attribution img {
+  opacity: 0.5;
+  height: 2em;
+}
+
+.attribution .cc {
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.center {
+  margin: auto;
+  text-align: center;
+}
+
+</style>
+
+<script>
+
+var GLTF_URL;
+$.getJSON("https://devapi.remakeworld.com/api/api_3dobjects/get_3dobjects.json?channel_id=10&experience_id=927&lat=47.268818&lng=-122.34731&channel_id=10&df=right_here&q=tesla", function(json){
+    // change the splash_tagline to model URL:
+    console.log("GLTF_URL:" + json.json[24].posting_url[3]);
+    //define the model URL
+    GLTF_URL = window.encodeURI(json.json[24].posting_url[3])
+});
+
+</script>
+
+</head>
+
+<body>
+  <header class="center">
+      <h1>Vertical Life - 3D Objects in Web XR </h1>
+      <p>Load Content from Get 3D Object JSON</p>
+    </header>
+
+<div class="content3D">
+
+   <model-viewer src=GLTF_URL ar camera-controls
+                 alt="A 3D model of an astronaut"
+                 background-color="#222"
+                 magic-leap unstable-webxr >
+   </model-viewer>
+   <section class="attribution">
+     <span>
+       <h1>Model Loaded from JSON</h1>
+       <p>If viewing on device, press the 3D icon to launch Scene Viewer and view in AR in browser</p>
+     </span>
+   </section>
+ </div>
+
+</body>
+
+</html>
